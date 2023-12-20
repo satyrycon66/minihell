@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   redir2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:45:24 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/18 19:38:22 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/20 12:58:31 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
 char	**build_redir2_cmd(t_token *token)
 {
 	char	**cmd;
-	int cmd_no;
-	int cmd_index;
+	int		cmd_no;
+	int		cmd_index;
 
 	cmd_no = 0;
 	cmd_index = 0;
@@ -31,15 +30,15 @@ char	**build_redir2_cmd(t_token *token)
 
 void	redir2(t_token *token)
 {
-	t_mini *mini;
+	t_mini	*mini;
+	char	*path;
+	char	**cmd;
+	char	**env;
+
 	mini = get_data();
 	token->fd_in = open(token->next->cmd[0], O_RDONLY, 0777);
 	if (token->fd_in <= 0)
 		ft_putstr_fd("No such file dumbass\n", 2);
-	char *path;
-	char **cmd;
-	char **env;
-
 	path = get_path(token);
 	cmd = build_redir2_cmd(token);
 	env = env_l_to_dbl_arr(mini->env_test);
@@ -51,5 +50,4 @@ void	redir2(t_token *token)
 		path = NULL;
 		releaser(env);
 	}
-	
 }

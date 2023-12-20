@@ -6,7 +6,7 @@
 /*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:04:07 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 12:05:55 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:27:48 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ char	*get_dollar_sign(char *mini_cmd)
 	int		i;
 
 	mini = get_data();
+	// printf("test%s\n",mini_cmd);
 	i = has_dollar_sign(mini_cmd) + 1;
 	str = check_part(&mini_cmd[i]);
 	dollar_sign = ft_strdup(get_env_part(mini, str));
+	//regle un leak mais pas sur qui est a bonne place invalide read of size
+	free(str);
 	return (dollar_sign);
 }
 

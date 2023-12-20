@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/18 19:41:19 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/20 12:58:14 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int token_size(t_token *token)
+int	token_size(t_token *token)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	while (token->cmd[size])
 		size++;
-	return size;
+	return (size);
 }
-
 
 char	**build_redir_cmd(t_token *token)
 {
 	char	**cmd;
-	int cmd_no;
-	int cmd_index;
+	int		cmd_no;
+	int		cmd_index;
 
 	cmd_no = 0;
 	cmd_index = 0;
@@ -41,16 +40,17 @@ char	**build_redir_cmd(t_token *token)
 void	redir(t_token *token)
 {
 	t_token	*temp;
-	char *path;
-	char **cmd;
-	char **env;
+	char	*path;
+	char	**cmd;
+	char	**env;
+
 	temp = token;
 	if (token->type == REDIR_IN)
-	temp->fd_out = open(token->next->cmd[0], O_WRONLY | O_CREAT | O_TRUNC,
+		temp->fd_out = open(token->next->cmd[0], O_WRONLY | O_CREAT | O_TRUNC,
 				0777);
 	else
 		token->fd_out = open(token->next->cmd[0], O_WRONLY | O_CREAT | O_APPEND,
-			0777);
+				0777);
 	dup2(temp->fd_out, 1);
 	if (temp->fd_out < 0)
 		return ;
@@ -59,24 +59,26 @@ void	redir(t_token *token)
 	env = env_l_to_dbl_arr(token->mini->env_test);
 	if (token->next->next_sep && token->next->next_sep[0] == '|')
 		do_pipe2(token);
-	else{
-
-	if ((execve(path, cmd, env) < 0))
+	else
 	{
-		free(cmd);
-		command_not_found(token->cmd[0]);
-		close(token->fd_hd);
-		path = NULL;
-		releaser(env);
-	}
+		if ((execve(path, cmd, env) < 0))
+		{
+			free(cmd);
+			command_not_found(token->cmd[0]);
+			close(token->fd_hd);
+			path = NULL;
+			releaser(env);
+		}
 	}
 }
+
 char	**build_heredoc_cmd2(t_token *token)
 {
 	char	**cmd;
-	int i = 0;
-	int cmd_no;
+	int		i;
+	int		cmd_no;
 
+	i = 0;
 	cmd_no = 0;
 	cmd = malloc(sizeof(char *) * 15);
 	if (!ft_strncmp(token->cmd[i], "ls", 3))

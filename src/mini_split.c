@@ -6,7 +6,7 @@
 /*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 20:20:09 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/19 14:12:04 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:25:52 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ char	**no_name(char *s, int wrd_no, int no_wrds, char **split)
 		while (s[i] && s[i] == ' ')
 			i++;
 		len = word_len(s, i);
-		
 		split[wrd_no] = ft_substr(s, i, len);
 		if (split[wrd_no][0] == '\0')
 		{

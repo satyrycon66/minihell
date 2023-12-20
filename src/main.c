@@ -6,7 +6,7 @@
 /*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/19 15:03:18 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:03:47 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,32 +104,31 @@ int	main(int ac, char **av, char **env)
 	return (g_errno);
 }
 
+
+
+
 // 19 dec error
+
+// ********** dans le pdf de correction **************************************
+
+// "" | "" //retourne pas derreur 
+
+// ls < a      || cat < a	
+//a : command not found
+
+// ls > a | ls | cat -e
+// ne fait pas le pipe apres redirection 
+
 // /bin/ls -l | cat -e ne fait pas le "cat -e" fait pas de pipe en  gros
+
+// **************** AUTRES *******************************************************
+
 
 //echo -n- devrais ecrire '-n-'
 
-//echo -n -n ne devrais pas ecrire -n mais rien touchi comme test je trouve
+//echo -n -n ne devrais pas ecrire -n mais rien, touchi comme test je trouve
 
-//
-
-// "" | "" //retourne pas derreur
-
-
-
-
-
-
-
-
-
-
-//old error 
-
-// cat -e <<  a 
-// ne fait pas le "-e"
-
-// signaux heredoc
+//********** LEAKS *************************************************************
 
 //encore des leaks dans export
 //definitely lost: 41 bytes in 2 blocks
@@ -144,8 +143,19 @@ int	main(int ac, char **av, char **env)
 //echo $PATH
 // 2 leaks
 
-// exit 1 1 1 1 leaks on peu le bloquer
-// si il y as plus que 1 chiffre"arguments" ca leaks sinon non
+//unset PATH 
+//leaks 9 block
+
+//still reachable et un fd si je cat << a et je sort avec control d
+//normal jai pas free
+
+// a verifier encore
+// signaux heredoc
+
+
+//**********************************************************************
+
+
 
 
 
