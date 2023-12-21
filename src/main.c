@@ -6,7 +6,7 @@
 /*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 16:03:47 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:12:39 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,11 @@ int	main(int ac, char **av, char **env)
 
 // ********** dans le pdf de correction **************************************
 
-// "" | "" //retourne pas derreur 
+// "" | ""     ||  "    "  | "     "
+//retourne pas derreur senser ecrire command not found
+
+//    |
+//senser ecrire syntax error
 
 // ls < a      || cat < a	
 //a : command not found

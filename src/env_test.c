@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:09:45 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 19:49:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:19:28 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_environ	*init_item(char *to_split)
 		env->env_val = ft_strdup(&to_split[ft_strlen(env->env_var) + 1]);
 	}
 	env->next = NULL;
+	//regle des leaks mais semble pas parfait
+	// if(env->temp)
+	// free(env->temp);
 	return (env);
 }
 

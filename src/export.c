@@ -6,7 +6,7 @@
 /*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:01:37 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 12:06:42 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:45:40 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,13 @@ void	do_export(t_mini *mini, t_export *export, char **var)
 		}
 		else
 		{
+			
+			
 			head_new = new_env2(var[x++]);
 			head_new->num = x;
 			ft_envadd_back(&mini->env_test, head_new);
+			// ajout de simon free
+			free(temp);
 		}
 		export = export->next;
 	}
