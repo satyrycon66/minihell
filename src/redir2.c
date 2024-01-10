@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:45:24 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/20 12:58:31 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:36:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,19 @@ char	**build_redir2_cmd(t_token *token)
 
 void	redir2(t_token *token)
 {
-	t_mini	*mini;
-	char	*path;
-	char	**cmd;
-	char	**env;
 
-	mini = get_data();
 	token->fd_in = open(token->next->cmd[0], O_RDONLY, 0777);
 	if (token->fd_in <= 0)
-		ft_putstr_fd("No such file dumbass\n", 2);
-	path = get_path(token);
-	cmd = build_redir2_cmd(token);
-	env = env_l_to_dbl_arr(mini->env_test);
-	if ((execve(path, cmd, env) < 0))
 	{
-		free(cmd);
-		command_not_found(token->cmd[0]);
-		close(token->fd_hd);
-		path = NULL;
-		releaser(env);
+		ft_putstr_fd("No such file dumbass\n", 2);
+		close(token->fd_in);
+		exit(0);
+	}
+	else
+	{
+		dup2(token->fd_in, 0);
+		if (token->next->next)
+			do_pipe2(token);
+		exec(token);
 	}
 }

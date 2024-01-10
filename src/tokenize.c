@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 12:34:50 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:34:08 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ int	check_file_exists(t_token *token)
 
 int	get_errno(t_token *token)
 {
-	t_mini	*mini;
-
-	mini = get_data();
 	if (is_builtin(token))
 		return (0);
 	else if (!ft_strncmp(token->cmd[0], "exit", 5))

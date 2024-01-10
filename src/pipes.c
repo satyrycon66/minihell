@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/18 14:09:41 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:37:53 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+
+void	dup2_0(t_token *token)
+{
+	close(token->p_fd[1]);
+	dup2(token->p_fd[0], 0);
+	close(token->p_fd[0]);
+}
+
+void	dup2_1(t_token *token)
+{
+	close(token->p_fd[0]);
+	dup2(token->p_fd[1], 1);
+	close(token->p_fd[1]);
+}
 
 void	child_do_pipe(t_token *token)
 {
@@ -47,38 +62,28 @@ void	do_pipe(t_token *token)
 	}
 }
 
-void	child_do_pipe2(t_token *token, int p_fd[2])
-{
-	close(p_fd[0]);
-	dup2(p_fd[1], 1);
-	close(p_fd[1]);
-	free_minishell(token->mini);
-	exec(token);
-	exit(0);
-}
 
 void	do_pipe2(t_token *token)
 {
 	pid_t	pid;
-	int		p_fd[2];
 
-	if (is_empty(token->next->cmd[0]))
-		return ;
-	if (pipe(p_fd) == -1)
+	if (pipe(token->p_fd) == -1)
 		exit(0);
 	pid = fork();
-	if (token->pid == -1)
+	if (pid == -1)
 		exit(0);
 	if (!pid)
-		child_do_pipe2(token, p_fd);
+	{
+		dup2_1(token);
+		exec(token);
+		free_minishell(token->mini);
+		exit(0);
+	}
 	else
 	{
+		// dup2(1, token->fd_in);
 		token->pid = pid;
-		close(p_fd[1]);
-		dup2(p_fd[0], 0);
-		close(p_fd[0]);
-		if (token->next->next->cmd)
-			exec_and_stuff(token->next->next);
-		waitpid(pid, NULL, 0);
+		dup2_0(token);
+		exec_and_stuff(token->next->next);
 	}
 }

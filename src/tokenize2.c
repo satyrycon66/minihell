@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:33:40 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/13 12:34:56 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:40:03 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	tokens_next_sep(t_token *tokens)
 		tokens->type = REDIR_DBL2;
 	else if (!ft_strncmp(tokens->next_sep, ">>", 3))
 		tokens->type = REDIR_DBL;
+	else if (!ft_strncmp(tokens->next_sep, "<", 3))
+		tokens->type = REDIR_OUT;
 	else if (!ft_strncmp(tokens->next_sep, ">", 2))
 	{
 		tokens->type = REDIR_IN;
