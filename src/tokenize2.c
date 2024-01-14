@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:33:40 by siroulea          #+#    #+#             */
-/*   Updated: 2024/01/10 11:40:03 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:25:45 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	tokens_next_sep(t_token *tokens)
 	else if (!ft_strncmp(tokens->next_sep, ">", 2))
 	{
 		tokens->type = REDIR_IN;
-		if (tokens->next && tokens->next->next_sep == NULL)
-			tokens->next->type = -1;
+		// if (tokens->next && tokens->next->next_sep == NULL)
+		// 	tokens->next->type = -1;
 	}
 }
 
@@ -67,7 +67,7 @@ void	token_type(t_token *tokens)
 	if (!ft_strncmp(tokens->cmd[0], ">", 2))
 	{
 		tokens->type = REDIR_IN;
-		redir(tokens);
+		// redir(tokens);
 	}
 	else if (tokens->cmd && (tokens->cmd[0][0] == '.'
 		|| tokens->cmd[0][0] == '/'))

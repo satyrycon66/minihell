@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 15:10:58 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:38:17 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	redir(t_token *token)
 	// char	*path;
 	// char	**cmd;
 	// char	**env;
-
 	temp = token;
 	if (token->type == REDIR_IN)
 		temp->fd_out = open(token->next->cmd[0], O_WRONLY | O_CREAT | O_TRUNC,
@@ -52,23 +51,23 @@ void	redir(t_token *token)
 		token->fd_out = open(token->next->cmd[0], O_WRONLY | O_CREAT | O_APPEND,
 				0777);
 	dup2(temp->fd_out, 1);
-	if (temp->fd_out < 0)
-		return ;
-	exec(token);
-	// path = get_path(token);
-	// cmd = token->cmd;
-	// env = env_l_to_dbl_arr(token->mini->env_test);
-	// // if (token->next->next_sep && token->next->next_sep[0] == '|')
-	// // 	exec_and_stuff(token->next->next);
-
-	// 	if ((execve(path, cmd, env) < 0))
-	// 	{
-	// 		free(cmd);
-	// 		command_not_found(token->cmd[0]);
+	// if (token->next && token->next->next_sep[0] == '|')
+	// 	do_pipe2(token);
+	// else
+		exec(token);
+	//  path = get_path(token);
+	//  cmd = token->cmd;
+	//  env = env_l_to_dbl_arr(token->mini->env_test);
+	//  // if (token->next->next_sep && token->next->next_sep[0] == '|')
+	//  // 	exec_and_stuff(token->next->next);
+ 	// if ((execve(path, cmd, env) < 0))
+	//  	{
+	//  		free(cmd);
+	//  		command_not_found(token->cmd[0]);
 	// 		close(token->fd_hd);
-	// 		path = NULL;
-	// 		releaser(env);
-	// 	}
+	//  		path = NULL;
+	//  		releaser(env);
+	//  	}
 	
 }
 
