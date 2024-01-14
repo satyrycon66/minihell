@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:33:40 by siroulea          #+#    #+#             */
-/*   Updated: 2024/01/14 15:25:45 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:03:58 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	tokens_next_sep(t_token *tokens)
 		tokens->type = REDIR_DBL2;
 	else if (!ft_strncmp(tokens->next_sep, ">>", 3))
 		tokens->type = REDIR_DBL;
-	else if (!ft_strncmp(tokens->next_sep, "<", 3))
+	else if (!ft_strncmp(tokens->next_sep, "<", 2))
 		tokens->type = REDIR_OUT;
 	else if (!ft_strncmp(tokens->next_sep, ">", 2))
 	{
