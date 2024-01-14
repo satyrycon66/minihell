@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 14:09:24 by siroulea          #+#    #+#             */
-/*   Updated: 2024/01/10 14:52:05 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:08:11 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exec_and_stuff(t_token *token)
 			head->child_pid = pid;
 			wait_pids(mini->tokens);
 		}
-		if (token->next && token->next->next)
-		exec_and_stuff(token->next->next);
+		if (token->next && token->next->next && token->type == REDIR_IN)
+			exec_and_stuff(token->next->next);
 	}
 }

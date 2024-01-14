@@ -49,7 +49,7 @@ all: $(NAME) $(RLDIR)
 # Generates output file
 $(NAME): $(OBJS)
 	$(HIDE)$(MAKE) -C libft
-	$(HIDE)$(CC) $(CFLAGS) -lreadline -lncurses libft/libft.a -o $@ $^
+	$(HIDE)$(CC) $(CFLAGS) -lreadline -lncurses readline/libreadline.a libft/libft.a -o $@ $^
 
 # Compiles sources into objects
 $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c $(INCRL) $(INC) | $(OBJDIR)
