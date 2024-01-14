@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/10 11:37:53 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:42:28 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ void	child_do_pipe(t_token *token)
 	close(token->p_fd[0]);
 	dup2(token->p_fd[1], 1);
 	close(token->p_fd[1]);
-	exec(token);
+	if (token->type == ABS)
+	{
+		printf("TEESSSTT\n");
+		absolute_path(token);
+	}
+	else
+		exec(token);
 	free_minishell(token->mini);
 	exit(0);
 }
@@ -87,3 +93,4 @@ void	do_pipe2(t_token *token)
 		exec_and_stuff(token->next->next);
 	}
 }
+

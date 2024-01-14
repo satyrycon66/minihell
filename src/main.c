@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 16:12:39 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:46:38 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*get_prompt(char *prt)
 
 void	run_minishell(t_mini *mini)
 {
+	// print_token(mini);
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
 	wait_pids(mini->tokens);
@@ -100,6 +101,7 @@ int	main(int ac, char **av, char **env)
 			else if (parsing > 0)
 				run_minishell(mini);
 		}
+	
 	}
 	return (g_errno);
 }
@@ -107,6 +109,7 @@ int	main(int ac, char **av, char **env)
 
 
 
+//cat < a | ls | cat -e    un cat de trop 
 // 19 dec error
 
 // ********** dans le pdf de correction **************************************

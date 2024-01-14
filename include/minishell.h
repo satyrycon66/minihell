@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/18 19:38:48 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:06:02 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int						heredoc(t_token *token);
 void					do_pipe3(t_token *token);
 void					do_pipe2(t_token *token);
 void					do_pipe(t_token *token);
+void					do_pipea(t_token *token);
 void					redir(t_token *token);
 void					redir2(t_token *token);
 void					redir_append(t_token *token);

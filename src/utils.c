@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:24:30 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/15 14:28:18 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:41:06 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	display_split(char **s, char *str)
-{
-	int	x;
-
-	x = 0;
-	if (str == 0)
-		str = "split";
-	if (s[0] == NULL)
-		ft_printf("\nCMD Empty\n");
-	while (s[x])
-	{
-		ft_printf("%s[%d]<%s>\n", str, x, s[x]);
-		x++;
-	}
-}
 
 int	no_of_quotes(int max, char *s)
 {

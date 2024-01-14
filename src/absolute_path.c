@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:17:36 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:06:52 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:19:52 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	exec_abs_path(char *path, t_token *token, char **s_cmd)
 	if (access(path, F_OK | X_OK) == 0)
 	{
 		env = env_l_to_dbl_arr(token->env);
+
 		if (execve(path, s_cmd, env) < 0)
 		{
 			is_a_directory(s_cmd[0]);
@@ -61,7 +62,6 @@ void	absolute_path(t_token *token)
 {
 	char	*path;
 	char	**s_cmd;
-
 	s_cmd = NULL;
 	path = malloc(100);
 	if (!path || !token->cmd[0])

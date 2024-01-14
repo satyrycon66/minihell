@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/15 14:27:10 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:27:59 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*get_path(t_token *token)
 
 void	exec_fail(t_token *token, char *path, char **env)
 {
-	command_not_found(token->cmd[0]);
 	free_child(token->mini);
 	releaser(env);
 	free(path);
@@ -58,22 +57,22 @@ int	exec(t_token *token)
 
 	mini = get_data();
 	env = env_l_to_dbl_arr(mini->env_test);
-	if (token->cmd[0] == NULL)
-		return (1);
-	if (token->type < 0)
-		return (1);
 	path = get_path(token);
+	if (is_empty(token->cmd[0]))
+		return 0;
 	if (is_sep(token->cmd[0]))
 		exec_fail(token, path, env);
 	if (path == NULL || execve(path, token->cmd, env) < 0)
-		exec_fail(token, path, env);
+	{
+		command_not_found(token->cmd[0]);
+		exec_fail(token, path, env);}
 	return (0);
 }
 
 void	wait_pids(t_token *token)
 {
 	t_token	*head;
-
+	
 	head = token->mini->tokens;
 	while (head)
 	{

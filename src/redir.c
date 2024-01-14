@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 12:58:14 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:45:26 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,9 @@ void	redir(t_token *token)
 	path = get_path(token);
 	cmd = build_redir_cmd(token);
 	env = env_l_to_dbl_arr(token->mini->env_test);
-	if (token->next->next_sep && token->next->next_sep[0] == '|')
-		do_pipe2(token);
-	else
-	{
+	// if (token->next->next_sep && token->next->next_sep[0] == '|')
+	// 	exec_and_stuff(token->next->next);
+
 		if ((execve(path, cmd, env) < 0))
 		{
 			free(cmd);
@@ -69,7 +68,7 @@ void	redir(t_token *token)
 			path = NULL;
 			releaser(env);
 		}
-	}
+	
 }
 
 char	**build_heredoc_cmd2(t_token *token)

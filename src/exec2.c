@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 14:09:24 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/19 14:41:30 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:52:05 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	do_child_stuff(t_token *token)
 {
-	if (token->type == ABS)
-		absolute_path(token);
-	else if (token->type == REDIR_IN)
+	if (token->type == REDIR_IN)
 		redir(token);
 	else if (token->type == REDIR_OUT)
 		redir2(token);
@@ -28,6 +26,8 @@ void	do_child_stuff(t_token *token)
 		do_pipe3(token);
 	else if (token->type == PIPE || ft_strncmp(token->next_sep, "|", 1))
 		do_pipe(token);
+	else if (token->type == ABS)
+		absolute_path(token);
 	else if (!ft_strncmp(token->cmd[0], "echo", 5))
 		ft_echo(token);
 	else if (!ft_strncmp(token->cmd[0], "pwd", 4))
@@ -48,7 +48,13 @@ void	exec_and_stuff(t_token *token)
 	if (token == NULL)
 		return ;
 	head = token;
-	if (!ft_builtins(head))
+	if (is_empty(token->cmd[0]))
+	{
+		command_not_found(token->cmd[0]);
+		if (token->next)
+			exec_and_stuff(token->next);
+	}
+	else if (!ft_builtins(head))
 	{
 		pid = fork();
 		if (!pid)
@@ -58,5 +64,7 @@ void	exec_and_stuff(t_token *token)
 			head->child_pid = pid;
 			wait_pids(mini->tokens);
 		}
+		if (token->next && token->next->next)
+		exec_and_stuff(token->next->next);
 	}
 }
