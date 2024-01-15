@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:45:24 by siroulea          #+#    #+#             */
-/*   Updated: 2024/01/14 16:57:38 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 18:56:54 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	redir2(t_token *token)
 	else
 	{
 		dup2(token->fd_in, 0);
-		if (token->next->next && token->next->next->type == PIPE)
+		if (token->next->next)
 			do_pipe2(token);
 		else
 			exec(token);

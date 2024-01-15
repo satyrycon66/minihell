@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 16:52:23 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 17:48:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ int	do_heredoc(t_token *token)
 	char	**here_doc_cmd;
 	char	*path;
 	char	**env;
+	t_mini *mini;
 
+	mini = get_data();
 	here_doc_cmd = build_heredoc_cmd2(token);
 	env = env_l_to_dbl_arr(token->env);
 	path = get_path(token);
@@ -107,7 +109,8 @@ int	do_heredoc(t_token *token)
 		free(here_doc_cmd);
 		command_not_found(token->cmd[0]);
 		close(token->fd_hd);
-		path = NULL;
+		free(path);
+		free_minishell(mini);
 		releaser(env);
 	}
 	return (0);
@@ -120,7 +123,7 @@ int	heredoc(t_token *token)
 
 	if (!token->next->cmd[0])
 		return (syntax_error());
-	delimiter = ft_strdup(token->next->cmd[0]);
+	delimiter = (token->next->cmd[0]);
 	token->fd_hd = open(".temp", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	heredoc_input = get_prompt(HEREDOC);
 	if (ft_strncmp(heredoc_input, delimiter, ft_strlen(delimiter) + 1))
@@ -131,7 +134,8 @@ int	heredoc(t_token *token)
 		if (ft_strncmp(heredoc_input, delimiter, ft_strlen(delimiter) + 1))
 			ft_putendl_fd(heredoc_input, token->fd_hd);
 	}
-	free(delimiter);
+	// free(heredoc_input);
+	// free(delimiter);
 	if (token->next && token->next->type == PIPE)
 		do_pipe3(token);
 	else

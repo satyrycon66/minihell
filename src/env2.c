@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:37:02 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/20 15:09:34 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/14 19:23:34 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_env_part(t_mini *mini, char *part)
 	if (!part || !part[0])
 		return (NULL);
 	head = mini->env_test;
-	while (head != NULL)
+	while (head->next != NULL)
 	{
 		part_len = ft_strlen(mini->env_test->env_var);
 		if (!ft_strncmp(head->env_var, part, part_len))

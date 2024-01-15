@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 18:50:45 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/14 17:50:11 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_echo(t_token *token)
 		write(1, "\n", 1);
 		return (1);
 	}
-	if (token->cmd[i] && !ft_strncmp(token->cmd[i], "-n", 2))
+	if (token->cmd[i] && !ft_strncmp(token->cmd[i], "-n", 3))
 	{
 		n_option = 1;
 		i++;

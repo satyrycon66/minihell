@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 13:46:38 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 17:15:43 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	init_minishell(char **env)
 char	*get_prompt(char *prt)
 {
 	char	*line;
-
+	t_mini *mini;
+	mini = get_data();
 	line = readline(prt);
 	if (line)
 	{
@@ -56,6 +57,7 @@ char	*get_prompt(char *prt)
 	else
 	{
 		//rajouter free
+		free_minishell(mini);
 		exit(g_errno);
 	}
 		

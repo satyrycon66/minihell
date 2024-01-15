@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:59:47 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/10 13:17:10 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 18:48:05 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,6 @@ int	parse_mini_cmds(t_mini *mini)
 	if (!mini->cmds[no_words] || !mini->cmds)
 		return (0);
 	set_mini_no_wrds();
-	while (mini->cmds[++cmd_no])
-	{
-		if (has_dollar_sign(mini->cmds[cmd_no]) != 0
-			|| (mini->cmds[cmd_no][0] == '$' && mini->cmds[cmd_no][1]
-				&& mini->cmds[cmd_no][1] != '$'))
-		{
-			if (has_quotes(mini->cmds[cmd_no]) != 2)
-				mini->cmds[cmd_no] = dollar_sign(mini->cmds[cmd_no]);
-		}
-	}
-	mini->cmds[cmd_no] = NULL;
 	if (is_empty(mini->cmds[0]))
 		return (0);
 	return (1);

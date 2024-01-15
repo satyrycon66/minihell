@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 14:09:24 by siroulea          #+#    #+#             */
-/*   Updated: 2024/01/14 16:51:31 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 18:45:37 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	do_child_stuff(t_token *token)
 		heredoc(token);
 	else if (token->type == -3)
 		do_pipe3(token);
-	else if (token->type == PIPE || (token->next_sep && !ft_strncmp(token->next_sep, "|", 1)))
+	else if (token->type == PIPE || (token->next && !ft_strncmp(token->next_sep, "|", 1)))
 		do_pipe(token);
 	else if (token->type == ABS)
 		absolute_path(token);
@@ -66,11 +66,11 @@ void	exec_and_stuff(t_token *token)
 			head->child_pid = pid;
 			wait_pids(mini->tokens);
 		}
-		if (token->next && token->next->type == REDIR_OUT)
-			exec_and_stuff(token->next);
-		if (token->next && token->next->next && token->type == REDIR_IN && token->next->type == PIPE )
+		// if (token->next && token->next->type == REDIR_OUT)
+		// 	exec_and_stuff(token->next);
+		if (token->next && token->next->next && token->type == REDIR_IN)
 			{
-				if(ft_strncmp(token->next->next->cmd[0], "cat", 3) != 0 && ft_strncmp(token->next->next->cmd[0], "wc", 3) != 0)/////////// patch
+				// if(ft_strncmp(token->next->next->cmd[0], "cat", 3) != 0 && ft_strncmp(token->next->next->cmd[0], "wc", 3) != 0)/////////// patch
 				exec_and_stuff(token->next->next);
 			}
 	}

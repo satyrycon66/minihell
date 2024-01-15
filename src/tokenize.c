@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/10 11:34:08 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/14 19:20:09 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,16 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 
 	wrd_no = 0;
 	tokens = malloc(sizeof(t_token));
-	tokens->cmd = malloc(sizeof(char *) * 5);
+	tokens->cmd = malloc(sizeof(char *) * 100);
+	if (!mini->cmds)
+		return NULL;
 	if (mini->cmds[cmd_index] && is_sep(mini->cmds[cmd_index]))
 		tokens->cmd[wrd_no++] = ft_strdup(mini->cmds[cmd_index++]);
-	while (!is_sep(mini->cmds[cmd_index]) && !is_empty(mini->cmds[cmd_index])
-		&& mini->cmds[cmd_index])
+	while (mini->cmds[cmd_index] && !is_sep(mini->cmds[cmd_index]) && !is_empty(mini->cmds[cmd_index]))
 	{
-		if (!has_quotes(mini->cmds[cmd_index]))
+		if (mini->cmds[cmd_index][0] == '$' && (has_quotes(mini->cmds[cmd_index]) != 2))
+			tokens->cmd[wrd_no] = dollar_sign(mini->cmds[cmd_index]);
+		else if (!has_quotes(mini->cmds[cmd_index]))
 			tokens->cmd[wrd_no] = ft_strdup(mini->cmds[cmd_index]);
 		else if ((has_quotes(mini->cmds[cmd_index]) == 2))
 			tokens->cmd[wrd_no] = ft_strdup2(mini->cmds[cmd_index]);

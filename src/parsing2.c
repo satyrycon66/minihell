@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:04:07 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 13:27:48 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/14 19:52:53 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ char	*pre_dollar_sign(char *mini_cmd)
 {
 	char	*str;
 	int		i;
+	int		j;
 
 	i = 0;
-	if (has_dollar_sign(mini_cmd) == 0)
+	j = 0;
+	if (has_dollar_sign(mini_cmd) == 0 || (mini_cmd && mini_cmd[0] == '$'))
 		return (ft_strdup("\0"));
 	str = malloc(has_dollar_sign(mini_cmd));
 	if (!str)
 		return (NULL);
 	while (mini_cmd && mini_cmd[i] && mini_cmd[i] != '$')
 	{
-		str[i] = mini_cmd[i];
+		str[j++] = mini_cmd[i];
 		i++;
 	}
-	str[i] = 0;
+	str[j] = 0;
 	return (str);
 }
 
@@ -71,15 +73,16 @@ char	*dollar_sign(char *mini_cmd)
 	char	*pre_dollar;
 	char	*get_dollar;
 	int		len;
-
-	if (mini_cmd[1] && mini_cmd[1] == '?')
+	if (!mini_cmd)
+		return (NULL);
+	if (mini_cmd && mini_cmd[1] && mini_cmd[1] == '?')
 		return (ft_itoa(g_errno));
 	if (!mini_cmd[1])
 		return (mini_cmd);
 	pre_dollar = pre_dollar_sign(mini_cmd);
 	get_dollar = get_dollar_sign(mini_cmd);
 	dollar_sign = ft_strjoin(pre_dollar, get_dollar);
-	len = dollar_len(mini_cmd);
+	len = dollar_len(mini_cmd) - 1;
 	if (dollar_sign[0] && mini_cmd[len])
 		dollar_sign = ft_strjoin(dollar_sign, &mini_cmd[len - 1]);
 	free(pre_dollar);
@@ -98,7 +101,7 @@ int	has_dollar_sign(char *input)
 	{
 		if (input[i] == '$')
 		{
-			while (input[i + 1] && input[i + 1] == '$')
+			while (input[i] && input[i + 1] && input[i + 1] == '$')
 				i++;
 			if (!input[i + 1])
 				return (0);
