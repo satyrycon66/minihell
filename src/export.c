@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:01:37 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 18:45:40 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:06:12 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_export	*ft_exp(t_mini *mini, char *var)
 	export->env_var = ft_strdup(export->temp[0]);
 	export->env_val = ft_strdup(&var[ft_strlen(export->env_var) + 1]);
 	export->next = NULL;
+	releaser(export->temp);
 	return (export);
 }
 
@@ -52,21 +53,21 @@ int	check_export(char **var)
 
 t_export	*init_export(t_mini *mini, char **var)
 {
-	t_export	*export;
+	// t_export	*export;
 	t_export	*export_head;
 	int			x;
 
 	x = 0;
-	export = ft_exp(mini, var[x]);
-	export_head = export;
+	mini->export = ft_exp(mini, var[x]);
+	export_head = mini->export;
 	while (var[++x])
 	{
-		export->next = ft_exp(mini, var[x]);
-		export = export->next;
+		mini->export->next = ft_exp(mini, var[x]);
+		mini->export = mini->export->next;
 	}
-	export->next = NULL;
-	export = export_head;
-	return (export);
+	mini->export->next = NULL;
+	mini->export = export_head;
+	return (mini->export);
 }
 
 int	export_no_input(t_mini *mini)
@@ -93,27 +94,31 @@ void	do_export(t_mini *mini, t_export *export, char **var)
 	int			x;
 	char		*temp;
 	t_environ	*head_new;
-
-	x = 0;
-	while (export != NULL)
+	t_export *head;
+	(void)export;
+	x = 0;	
+	head = mini->export;
+	while (mini->export != NULL)
 	{
-		temp = get_env_part(mini, export->env_var);
+		temp = get_env_part(mini, mini->export->env_var);
 		if (temp[0] != '\0')
 		{
-			update_env_part(mini, export->env_var, export->env_val);
+			update_env_part2(mini, mini->export->env_var, mini->export->env_val);
 			free(temp);
 			x++;
 		}
 		else
 		{
-			
-			
 			head_new = new_env2(var[x++]);
 			head_new->num = x;
 			ft_envadd_back(&mini->env_test, head_new);
 			// ajout de simon free
+			// free(head_new);
+			// free_env(head_new);
 			free(temp);
 		}
-		export = export->next;
+		mini->export = mini->export->next;
 	}
+	mini->export = head;
+	// free_export(mini->export);
 }

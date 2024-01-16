@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 17:50:11 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:56:05 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,29 @@ int	ft_pwd(t_token *token)
 int	ft_echo(t_token *token)
 {
 	int	i;
+	int	j;
 	int	n_option;
 
 	i = 1;
-	n_option = 0;
+	n_option = -1;
+	j = 1;
 	if (!token->cmd[1] || token->cmd[1] == NULL)
 	{
 		write(1, "\n", 1);
 		return (1);
 	}
-	if (token->cmd[i] && !ft_strncmp(token->cmd[i], "-n", 3))
+	while (token->cmd[i] && !ft_strncmp(token->cmd[i], "-n", 2) && n_option != 0)
 	{
-		n_option = 1;
+			n_option = 1;
+		while(token->cmd[i][j] == 'n')
+			j++;
+		if (ft_isalnum(token->cmd[i][j]))
+		{
+			i--;
+			n_option = 0;
+		}
 		i++;
+		
 	}
 	while (token->cmd[i])
 	{
@@ -57,7 +67,7 @@ int	ft_echo(t_token *token)
 			write(1, " ", 1);
 		i++;
 	}
-	if (n_option == 0)
+	if (n_option <= 0)
 		write(1, "\n", 1);
 	return (1);
 }
@@ -65,12 +75,17 @@ int	ft_echo(t_token *token)
 int	ft_unset(t_token *token)
 {
 	char		*part;
+	int 		cmd_no;
 	int			len;
 	t_environ	*head;
 
 	if (!token->cmd[1] || !token->cmd[1][0])
 		return (0);
-	part = (token->cmd[1]);
+	cmd_no = 1;
+	while (token->cmd[cmd_no])
+	{
+
+	part = (token->cmd[cmd_no]);
 	len = ft_strlen(part);
 	head = token->mini->env_test;
 	while (token->mini->env_test->next && ft_strncmp(part,
@@ -83,6 +98,8 @@ int	ft_unset(t_token *token)
 	}
 	token->mini->env_test = head;
 	token->mini->env_len--;
+	cmd_no++;
+	}
 	return (0);
 }
 
@@ -91,9 +108,7 @@ int	ft_builtins(t_token *token)
 	t_mini	*mini;
 
 	mini = get_data();
-	if (!ft_strncmp(token->cmd[0], "PWD", 3))
-		ft_pwd(token);
-	else if (!ft_strncmp(token->cmd[0], "cd", 2))
+	if (!ft_strncmp(token->cmd[0], "cd", 2))
 		ft_cd(mini, token);
 	else if (!ft_strncmp(token->cmd[0], "unset", 5))
 		ft_unset(token);

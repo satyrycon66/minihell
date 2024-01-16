@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 17:15:43 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:21:01 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*get_prompt(char *prt)
 	else
 	{
 		//rajouter free
-		free_minishell(mini);
+		free_env(mini->env_test);
+		free(mini);
 		exit(g_errno);
 	}
 		

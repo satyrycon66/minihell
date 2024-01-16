@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:09:45 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/20 19:19:28 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:42:02 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_environ	*init_item(char *to_split)
 		return (NULL);
 	env->temp = ft_split(to_split, '=');
 	if (!to_split || !env)
-		return (env);
+		return (NULL);
 	if (env->temp && env->temp[0])
 	{
 		env->env_var = ft_strdup(env->temp[0]);
@@ -54,9 +54,9 @@ t_environ	*init_item(char *to_split)
 		env->env_val = ft_strdup(&to_split[ft_strlen(env->env_var) + 1]);
 	}
 	env->next = NULL;
-	//regle des leaks mais semble pas parfait
+	// regle des leaks mais semble pas parfait
 	// if(env->temp)
-	// free(env->temp);
+	// releaser(env->temp);
 	return (env);
 }
 
@@ -67,13 +67,13 @@ void	set_env(t_mini *mini, char **env)
 
 	x = 0;
 	mini->env_test = init_item(env[x]);
-	releaser(mini->env_test->temp);
+	// releaser(mini->env_test->temp);
 	mini->env_test->num = x;
 	head = mini->env_test;
 	while (env[++x])
 	{
 		mini->env_test->next = init_item(env[x]);
-		releaser(mini->env_test->next->temp);
+		// releaser(mini->env_test->next->temp);
 		mini->env_test->next->num = x;
 		mini->env_test = mini->env_test->next;
 	}

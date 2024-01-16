@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/10 14:06:02 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:04:27 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_mini
 	char				*path;
 	int					env_len;
 	struct s_environ	*env_test;
+	struct s_export	*export;
 	int					errno;
 	struct s_token		*tokens;
 	int					pid;
@@ -111,6 +112,7 @@ int						ft_env(t_token *token);
 void					set_env(t_mini *mini, char **env);
 int						ft_cd(t_mini *mini, t_token *token);
 int						update_env_part(t_mini *mini, char *part, char *_new);
+int						update_env_part2(t_mini *mini, char *part, char *_new);
 char					*get_env_part(t_mini *mini, char *part);
 int						ft_unset(t_token *token);
 int						ft_export(t_mini *mini, char **var);

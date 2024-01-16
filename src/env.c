@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:06:25 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 08:09:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:38:13 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ void	ft_envadd_back(t_environ **env, t_environ *neo)
 
 t_environ	*ft_envlast(t_environ *env)
 {
-	while (env)
+	t_environ *head = env;
+	while (head)
 	{
-		if (env->next == NULL)
-			return (env);
-		env = env->next;
+		if (head->next == NULL)
+			return (head);
+		head = head->next;
 	}
-	return (env);
+	return (head);
 }

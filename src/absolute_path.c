@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:17:36 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/10 14:19:52 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:14:47 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,30 @@ void	exec_abs_path(char *path, t_token *token, char **s_cmd)
 void	absolute_path(t_token *token)
 {
 	char	*path;
+	int i = 2;
 	char	**s_cmd;
 	s_cmd = NULL;
 	path = malloc(100);
 	if (!path || !token->cmd[0])
 		return ;
+	if ((token->cmd[0][0] == '.' || token->cmd[0][0] == '/'))
+	{
+		if (!token->cmd[0][1])
+		{
+			is_a_directory(token->cmd[0]);
+			exit(0);
+		}
+		else if (token->cmd[0][2] && token->cmd[0][2] == '/')
+		{
+			while (token->cmd[0][i] == '/')
+				i++;
+			if (!token->cmd[0][i])
+			{
+				is_a_directory(token->cmd[0]);
+				exit(0);
+			}	
+		}
+	}
 	if (token->cmd[0][0] == '.')
 	{
 		getcwd(path, 100);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:22:48 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/20 18:50:25 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:08:48 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,13 @@ t_environ	*new_env2(char *var)
 
 int	ft_export(t_mini *mini, char **var)
 {
-	t_export	*export;
-
 	if (!var || !var[0] || !var[0][0])
 		return (export_no_input(mini));
 	if (!check_export(var) || !has_equal_sign(var))
 		return (0);
-	export = init_export(mini, var);
-	do_export(mini, export, var);
-	free_export(export);
+	init_export(mini, var);
+	do_export(mini, mini->export, var);
+	
 	return (0);
 }
 
@@ -94,7 +92,7 @@ int	is_builtin(t_token *token)
 	if (!ft_strncmp(token->cmd[0], "pwd", 3))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "PWD", 3))
-		return (0);
+		return (1);
 	else if (!ft_strncmp(token->cmd[0], "cd", 2))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "unset", 5))
@@ -106,7 +104,7 @@ int	is_builtin(t_token *token)
 	else if (!ft_strncmp(token->cmd[0], "env", 3))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "echo", 5))
-		return (0);
+		return (1);
 	else
 		return (0);
 }
