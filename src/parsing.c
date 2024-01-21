@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:59:47 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 18:48:05 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:45:21 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	check_input(t_mini *mini)
 
 	while (mini->cmds[x])
 	{
-		if (is_sep(mini->cmds[x]) && (!mini->cmds[x + 1] || !mini->cmds[x
-					+ 1][0]|| is_sep(mini->cmds[0]) ))
+		if (is_sep2(mini->cmds[x]) && (!mini->cmds[x + 1] || !mini->cmds[x
+					+ 1][0]|| is_sep2(mini->cmds[0]) ))
 		{
 			ft_putstr_fd("minishell: syntax error\n", 2);
 			g_errno = 258;

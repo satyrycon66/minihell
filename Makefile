@@ -51,7 +51,7 @@ $(NAME): $(OBJS)
 	$(HIDE)$(MAKE) -C libft
 	$(HIDE)$(CC) $(CFLAGS) -lreadline -lncurses readline/libreadline.a libft/libft.a -o $@ $^
 
-# Compiles sources into objects
+# Compiles sources into objects  
 $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c $(INCRL) $(INC) | $(OBJDIR)
 	$(HIDE)$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(G)Compiling : $(notdir $<) $(RT)"

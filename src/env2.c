@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:37:02 by siroulea          #+#    #+#             */
-/*   Updated: 2024/01/16 16:04:00 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:37:10 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	update_env_part2(t_mini *mini, char *part, char *_new)
 	if (mini->env_test && mini->env_test->env_val != NULL)
 	{
 		// free(mini->env_test->env_val);
+		// ft_strlcpy(mini->env_test->env_val, _new, ft_strlen(_new));
 		mini->env_test->env_val = ft_strdup(_new);
 		mini->env_test = head;
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:10:43 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/13 12:11:26 by siroulea         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:12:09 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,4 @@ int	is_char_sep(int c)
 		return (1);
 	return (0);
 }
+

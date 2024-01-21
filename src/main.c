@@ -6,11 +6,12 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/16 12:21:01 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:52:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <unistd.h>
 
 void	*releaser(char **table)
 {
@@ -48,30 +49,32 @@ char	*get_prompt(char *prt)
 	t_mini *mini;
 	mini = get_data();
 	line = readline(prt);
-	if (line)
+	while (line)
 	{
-		add_history(line);
+		if(!is_empty(line))
+			add_history(line);
 		return (line);
 	}
-	//ce else la pour le control d fonctionne
-	else
-	{
-		//rajouter free
-		free_env(mini->env_test);
-		free(mini);
-		exit(g_errno);
-	}
+	free_env(mini->env_test);
+	free(mini);
+	exit(g_errno);
 		
 	return (NULL);
 }
 
 void	run_minishell(t_mini *mini)
 {
+	t_token *token;
+
+	token = mini->tokens;
 	// print_token(mini);
 	init_signals(CHILD);
-	exec_and_stuff(mini->tokens);
-	wait_pids(mini->tokens);
-	wait_c_pids(mini->tokens);
+	exec_and_stuff(token);
+	// waitpid(token->pid, NULL, 0);
+	// if (token->next)
+		// waitpid(token->next->pid, NULL, 0);
+	// wait_c_pids(mini->tokens);
+	// wait_pids(mini->tokens);
 	free_tokens(mini->tokens);
 }
 
@@ -86,6 +89,7 @@ int	main(int ac, char **av, char **env)
 	mini = get_data();
 	g_errno = 0;
 	init_minishell(env);
+	printf("minishel pid: %d\n",getpid());
 	while (1)
 	{
 		init_signals(INTERACTIVE);

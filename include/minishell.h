@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/16 16:04:27 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:07:43 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define REDIR_OUT 5   // <
 # define REDIR_DBL 9   // >>
 # define REDIR_DBL2 10 // <<
+# define HEREDOC_T 10 // <<
 # define ABS 6
 # define FILE_OUT 7
 
@@ -58,7 +59,7 @@ typedef struct s_token
 	pid_t				child_pid;
 	pid_t				pid;
 	int					p_fd[2];
-
+	int					ex_kind;
 	int					input;
 	int					output;
 	int					fd_in;
@@ -79,11 +80,13 @@ typedef struct s_mini
 	char				*shlvl;
 	char				*path;
 	int					env_len;
+	t_token				*heredoc_temp;
 	struct s_environ	*env_test;
-	struct s_export	*export;
+	struct s_export		*export;
 	int					errno;
 	struct s_token		*tokens;
 	int					pid;
+	int					no_of_tokens;
 }						t_mini;
 
 typedef struct s_environ
@@ -153,7 +156,7 @@ void					do_export(t_mini *mini, t_export *_export, char **var);
 int						ft_set_env(t_mini *mini, char **env);
 int						export_no_input(t_mini *mini);
 int						check_export(char **var);
-t_export				*init_export(t_mini *mini, char **var);
+void 					init_export(t_mini *mini, char **var);
 
 /*Mini_split*/
 int						no_of_words(char *s, int trigger, int i, int no_wrds);
@@ -164,16 +167,18 @@ char					**ft_split2(char const *s, char *c);
 /*Execute*/
 t_mini					*get_data(void);
 void					exec_and_stuff(t_token *token);
+void					exec_and_stuff2(t_token *token);
 char					*get_path(t_token *token);
 void					absolute_path(t_token *token);
 int						exec(t_token *token);
 void					wait_pids(t_token *token);
 void					wait_c_pids(t_token *token);
+int						do_heredoc(t_token *token);
 int						heredoc(t_token *token);
 void					do_pipe3(t_token *token);
 void					do_pipe2(t_token *token);
 void					do_pipe(t_token *token);
-void					do_pipea(t_token *token);
+void					do_pipe_cat(t_token *token);
 void					redir(t_token *token);
 void					redir2(t_token *token);
 void					redir_append(t_token *token);
@@ -183,6 +188,7 @@ char					**build_heredoc_cmd2(t_token *token);
 char					*get_prompt(char *prt);
 int						ft_len(char *s);
 int						is_sep(char *str);
+int						is_sep2(char *str);
 int						no_of_quotes(int max, char *s);
 int						no_of_squotes(int max, char *s);
 char					*ft_str_to_upper(char *s);

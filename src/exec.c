@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 13:27:59 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/20 18:48:15 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	exec(t_token *token)
 	t_mini	*mini;
 
 	mini = get_data();
+
 	env = env_l_to_dbl_arr(mini->env_test);
 	path = get_path(token);
 	if (is_empty(token->cmd[0]))
@@ -72,12 +73,16 @@ int	exec(t_token *token)
 void	wait_pids(t_token *token)
 {
 	t_token	*head;
-	
-	head = token->mini->tokens;
+	t_mini *mini;
+	(void)token;
+	mini = get_data();
+	head = mini->tokens;
 	while (head)
 	{
-		if (head->pid)
+		if (head->pid > 1 ){
+			// printf("wait %d: %d\n", head->token_no, head->pid);
 			waitpid(head->pid, NULL, 0);
+		}
 		head = head->next;
 	}
 }
@@ -89,8 +94,10 @@ void	wait_c_pids(t_token *token)
 	head = token->mini->tokens;
 	while (head)
 	{
-		if (head->child_pid)
+		if (head->child_pid > 1){
+			ft_printf("waitc: -*%d*-\n", head->child_pid);
 			waitpid(head->child_pid, NULL, 0);
+		}
 		head = head->next;
 	}
 }

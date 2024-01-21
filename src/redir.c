@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 17:48:14 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:30:08 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,12 @@ char	**build_heredoc_cmd2(t_token *token)
 	char	**cmd;
 	int		i;
 	int		cmd_no;
+	t_mini *mini;
 
+	mini = get_data();
 	i = 0;
 	cmd_no = 0;
+	token = mini->tokens;
 	cmd = malloc(sizeof(char *) * 15);
 	if (!ft_strncmp(token->cmd[i], "ls", 3))
 		cmd_no++;
@@ -97,21 +100,24 @@ int	do_heredoc(t_token *token)
 	char	*path;
 	char	**env;
 	t_mini *mini;
-
+	
+	
 	mini = get_data();
-	here_doc_cmd = build_heredoc_cmd2(token);
 	env = env_l_to_dbl_arr(token->env);
 	path = get_path(token);
+	if (token->next && token->next->type == HEREDOC_T)
+		heredoc(token->next);
+	here_doc_cmd = build_heredoc_cmd2(mini->tokens);
 	if (is_sep(here_doc_cmd[0]))
-		return (1);
-	if ((execve(path, here_doc_cmd, env) < 0))
+		return (0);
+	else if ((execve(path, here_doc_cmd, env) < 0))
 	{
-		free(here_doc_cmd);
-		command_not_found(token->cmd[0]);
+		// releaser(here_doc_cmd);
+		// command_not_found(token->cmd[0]);
 		close(token->fd_hd);
-		free(path);
-		free_minishell(mini);
-		releaser(env);
+		// free(path);
+		// free_minishell(mini);
+		// releaser(env);
 	}
 	return (0);
 }
@@ -120,7 +126,9 @@ int	heredoc(t_token *token)
 {
 	char	*delimiter;
 	char	*heredoc_input;
-
+	t_mini * mini;
+	
+	mini = get_data();
 	if (!token->next->cmd[0])
 		return (syntax_error());
 	delimiter = (token->next->cmd[0]);

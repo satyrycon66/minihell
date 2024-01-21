@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/14 19:20:09 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:14:03 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void	set_var_tokens(t_mini *mini, t_token *tokens, int x, int wrd_no)
 	tokens->cmd[wrd_no] = NULL;
 	tokens->type = 0;
 	tokens->token_no = x;
-	tokens->pid = -1;
-	tokens->child_pid = -1;
+	mini->no_of_tokens = x;
+	// tokens->pid = -1;
+	// tokens->child_pid = -1;
+	if(!ft_strncmp(tokens->cmd[0],"cat", 4))
+		tokens->ex_kind = 1;
 	tokens->env = mini->env_test;
 	tokens->fd_out = 0;
 	tokens->mini = mini;

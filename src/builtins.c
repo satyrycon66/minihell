@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/16 14:56:05 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:20:21 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int	ft_unset(t_token *token)
 	int 		cmd_no;
 	int			len;
 	t_environ	*head;
+	t_mini *mini;
 
+	mini = get_data();
 	if (!token->cmd[1] || !token->cmd[1][0])
 		return (0);
 	cmd_no = 1;
@@ -94,6 +96,7 @@ int	ft_unset(t_token *token)
 	if (token->mini->env_test->next != NULL)
 	{
 		free(token->mini->env_test->next->env_var);
+		free(token->mini->env_test->next->env_val);
 		token->mini->env_test->next = token->mini->env_test->next->next;
 	}
 	token->mini->env_test = head;

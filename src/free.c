@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:13:03 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/16 15:59:12 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:41:48 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_env(t_environ *env)
 		if (env->env_val[0])
 			free(env->env_val);
 		if (env->temp)
-		releaser(env->temp);
+			releaser(env->temp);
 		free(env);
 		env = temp;
 	}

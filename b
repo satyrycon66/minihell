@@ -1,1 +1,13 @@
-allo
+Makefile
+Readline
+Readline-8.1
+a
+b
+bin
+include
+libft
+minishell
+minishell.dSYM
+minishell.sup
+src
+supp.txt

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:01:37 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/16 16:06:12 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:56:05 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int	check_export(char **var)
 	return (ret);
 }
 
-t_export	*init_export(t_mini *mini, char **var)
+void init_export(t_mini *mini, char **var)
 {
-	// t_export	*export;
 	t_export	*export_head;
 	int			x;
 
@@ -67,7 +66,6 @@ t_export	*init_export(t_mini *mini, char **var)
 	}
 	mini->export->next = NULL;
 	mini->export = export_head;
-	return (mini->export);
 }
 
 int	export_no_input(t_mini *mini)

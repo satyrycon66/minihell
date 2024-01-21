@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:24:30 by alpicard          #+#    #+#             */
-/*   Updated: 2024/01/10 12:41:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:45:08 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,26 @@ int	is_sep(char *str)
 	{
 		if (trigger == 0 && (str[i] == '|' || str[i] == '>' || str[i] == '<'
 				|| (str[i] == '>' && str[i + 1] && str[i + 1] == '>')))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	is_sep2(char *str)
+{
+	int	i;
+	int	trigger;
+
+	trigger = 0;
+	i = 0;
+	if (!str || !str[0])
+		return (0);
+	if (str[i] == 34 || str[i] == 39)
+		trigger = 1;
+	while (str[i])
+	{
+		if (trigger == 0 && (str[i] == '|' ))
 			return (1);
 		i++;
 	}
